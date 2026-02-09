@@ -1,44 +1,70 @@
 # Decentralized Voting
 
-On-chain voting dApp. Users connect a wallet (Sepolia), view candidates, and submit votes to a smart contract.
+On-chain voting dApp. Users connect a wallet on Sepolia, view candidates, and submit votes to a smart contract.
 
-**Stack:** Next.js 14, wagmi, viem, RainbowKit, Tailwind CSS.
+## Repository structure
 
-## Setup
+- **contract/** – Hardhat project (Solidity contract, compile, deploy to Sepolia).
+- **frontend/** – Next.js app (wagmi, viem, RainbowKit, Tailwind). This is what you deploy to Vercel.
+
+## Contract (Hardhat)
+
+From the repo root:
 
 ```bash
+cd contract
 npm install
 ```
 
-## Deploy the contract
+Create `contract/.env`:
 
-Uses Hardhat. Set `.env` with `API_URL` (Sepolia RPC) and `PRIVATE_KEY`.
+- `API_URL` – Sepolia RPC (e.g. `https://rpc.sepolia.org`).
+- `PRIVATE_KEY` – Deployer private key (no `0x` prefix).
+
+Compile and deploy:
 
 ```bash
-npx hardhat compile
-npm run hardhat:deploy
+npm run compile
+npm run deploy
 ```
 
-Log output includes the contract address. Put it in `.env.local` as:
+The script prints the contract address. Use it in the frontend as described below.
 
+## Frontend (Next.js)
+
+From the repo root:
+
+```bash
+cd frontend
+npm install
 ```
-NEXT_PUBLIC_CONTRACT_ADDRESS=0x...
-```
 
-Optional: `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` for WalletConnect (get one at cloud.walletconnect.com).
+Create `frontend/.env.local`:
 
-## Run locally
+- `NEXT_PUBLIC_CONTRACT_ADDRESS` – The contract address from the deploy step.
+- `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` – Optional; for WalletConnect (get one at cloud.walletconnect.com).
+
+Run locally:
 
 ```bash
 npm run dev
 ```
 
-Open http://localhost:3000. Use Sepolia in your wallet.
+Open http://localhost:3000 and use Sepolia in your wallet.
 
-## Deploy to Vercel
+Build (for production or Vercel):
 
 ```bash
 npm run build
 ```
 
-Add `NEXT_PUBLIC_CONTRACT_ADDRESS` and optionally `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` in the Vercel project environment variables. Connect the repo and deploy.
+## Deploying to Vercel
+
+1. Connect the repo to Vercel.
+2. Set **Root Directory** to `frontend`.
+3. Build command: `npm run build`. Install command: `npm install` (default).
+4. Add environment variables in the Vercel project:
+   - `NEXT_PUBLIC_CONTRACT_ADDRESS`
+   - `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` (optional)
+
+Vercel will build and deploy only the `frontend` app.
