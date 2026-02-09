@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ballot-bg: #0a0a0f;
+  --ballot-card: #12121a;
+  --ballot-border: #1e1e2e;
+  --ballot-accent: #6366f1;
+  --ballot-accent-hover: #818cf8;
+  --ballot-muted: #71717a;
+  --ballot-success: #22c55e;
+  --ballot-error: #ef4444;
+}
+
+body {
+  background: var(--ballot-bg);
+  color: #e4e4e7;
+  min-height: 100vh;
+}
+
+[data-rk] {
+  --rk-colors-connectButtonBackground: #12121a;
+  --rk-colors-connectButtonText: #e4e4e7;
+  --rk-colors-connectButtonInnerBackground: #1e1e2e;
+}

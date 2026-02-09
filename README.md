@@ -1,26 +1,44 @@
-# Decentralized Voting Application
+# Decentralized Voting
 
+On-chain voting dApp. Users connect a wallet (Sepolia), view candidates, and submit votes to a smart contract.
 
+**Stack:** Next.js 14, wagmi, viem, RainbowKit, Tailwind CSS.
 
-## Installation
+## Setup
 
-After you cloned the repository, you want to install the packages using
-
-```shell
+```bash
 npm install
 ```
 
-You first need to compile the contract and upload it to the blockchain network. Run the following commands to compile and upload the contract.
+## Deploy the contract
 
-```shell
+Uses Hardhat. Set `.env` with `API_URL` (Sepolia RPC) and `PRIVATE_KEY`.
+
+```bash
 npx hardhat compile
-npx hardhat run --network volta scripts/deploy.js
+npm run hardhat:deploy
 ```
 
-Once the contract is uploaded to the blockchain, copy the contract address and copy it in the .env file. You can also use another blockchain by writing the blockchain's endpoint in hardhat-config.
+Log output includes the contract address. Put it in `.env.local` as:
 
-Once you have pasted your private key and contract address in the .env file, simply run command
-
-```shell
-npm start
 ```
+NEXT_PUBLIC_CONTRACT_ADDRESS=0x...
+```
+
+Optional: `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` for WalletConnect (get one at cloud.walletconnect.com).
+
+## Run locally
+
+```bash
+npm run dev
+```
+
+Open http://localhost:3000. Use Sepolia in your wallet.
+
+## Deploy to Vercel
+
+```bash
+npm run build
+```
+
+Add `NEXT_PUBLIC_CONTRACT_ADDRESS` and optionally `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` in the Vercel project environment variables. Connect the repo and deploy.
